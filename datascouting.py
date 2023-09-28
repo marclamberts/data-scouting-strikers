@@ -52,7 +52,6 @@ def main():
                             format='0%',  # Format the x-axis as percentages
                             values=[i * 10 for i in range(11)]  # Custom tick values from 0 to 100 (0% to 100%)
                         ),
-                        scale=alt.Scale(domain=[0, 100])  # Limit the x-axis domain to 0-100
                        ),
                 y=alt.Y('Metric:N', title='Metric', sort=alt.EncodingSortField(field="Percentile Rank", op="mean", order="descending")),
                 tooltip=['Metric', 'Percentile Rank']
