@@ -33,7 +33,8 @@ def main():
 
     # Load data using the caching function
     file_path = "Complete database.xlsx"
-    df = load_and process_data(file_path)
+    df = load_and_process_data(file_path)
+
 
     # Create a filter to select the team, league, or all data
     data_selection = st.sidebar.radio("Select Data to Calculate Percentile Ranks", ["All Data", "By Team", "By League"])
