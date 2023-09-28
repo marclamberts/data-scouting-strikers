@@ -69,9 +69,6 @@ def main():
         ).properties(width=800, height=600, title=f'Mean Percentile Ranks for {metric_category} Metrics |@ShePlotsFC')
 
         st.altair_chart(bar_chart)
-    else:
-        # If the selected category is not Offensive, Defensive, or Passing, display the scatter plot
-        # ... (previous code for scatter plot creation) ...
 
     # Add the text at the bottom of the app
     st.markdown("Marc Lamberts @lambertsmarc @ShePlotsFC | Collected at 22-07-2023 | Wyscout")
