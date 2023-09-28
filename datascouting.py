@@ -70,6 +70,27 @@ def main():
 
         st.altair_chart(bar_chart)
 
+    # Add a text input for the user to search for a specific player
+    search_player = st.text_input("Search Player", "")
+
+    # Filter the data based on the search query and display a bar chart for the selected player
+    if search_player:
+        filtered_df = df[df["Player"].str.contains(search_player, case=False)]
+        if not filtered_df.empty:
+            player_name = filtered_df.iloc[0]["Player"]
+            player_metrics = filtered_df[category_metrics].mean()
+
+            # Create a bar chart for the selected player's metrics
+            player_bar_chart = alt.Chart(pd.DataFrame({'Metric': player_metrics.index,
+                                                       'Player': [player_name] * len(player_metrics),
+                                                       'Mean Percentile Rank': player_metrics.values})).mark_bar().encode(
+                x=alt.X('Metric:N', title='Metric'),
+                y=alt.Y('Mean Percentile Rank:Q', title='Mean Percentile Rank'),
+                tooltip=['Metric', 'Mean Percentile Rank']
+            ).properties(width=800, height=600, title=f'{player_name} - Mean Percentile Ranks for {metric_category} Metrics |@ShePlotsFC')
+
+            st.altair_chart(player_bar_chart)
+
     # Add the text at the bottom of the app
     st.markdown("Marc Lamberts @lambertsmarc @ShePlotsFC | Collected at 22-07-2023 | Wyscout")
 
