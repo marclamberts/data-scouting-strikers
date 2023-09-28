@@ -18,7 +18,7 @@ def load_and_process_data(file_path):
     # Calculate percentile ranks for the specified offensive metrics based on the total dataset and convert to 100.0 scale
     percentile_ranks = pd.DataFrame()
     for col in offensive_metrics:
-        percentile_ranks[f"{col} Percentile Rank"] = df[col].rank(pct=True) * 100.0
+        percentile_ranks[f"{col} Percentile Rank"] = df[col].rank(pct=True) * 1000  # Multiply by 10 to get 0-1000 range
 
     # Concatenate the percentile ranks DataFrame with the original DataFrame
     df = pd.concat([df, percentile_ranks], axis=1)
@@ -49,10 +49,10 @@ def main():
             bar_chart = alt.Chart(player_metrics).mark_bar().encode(
                 x=alt.X('Percentile Rank:Q', title='Percentile Rank',
                         axis=alt.Axis(
-                            format='0%',
-                            values=[i * 0.1 for i in range(11)]  # Custom tick values from 0 to 1 (0% to 100%)
+                            format='0',  # Format the x-axis as integers
+                            values=[i * 100 for i in range(11)]  # Custom tick values from 0 to 1000 (0% to 100%)
                         ),
-                        scale=alt.Scale(domain=[0, 100])  # Limit the x-axis domain to 0-100
+                        scale=alt.Scale(domain=[0, 1000])  # Limit the x-axis domain to 0-1000
                        ),
                 y=alt.Y('Metric:N', title='Metric', sort=alt.EncodingSortField(field="Percentile Rank", op="mean", order="descending")),
                 tooltip=['Metric', 'Percentile Rank']
