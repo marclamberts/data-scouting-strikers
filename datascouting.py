@@ -43,7 +43,7 @@ def main():
         filtered_df = df[df["Player"].str.contains(search_player, case=False)]
         if not filtered_df.empty:
             player_name = filtered_df.iloc[0]["Player"]
-            player_metrics = filtered_df[offensive_metrics + [f"{metric} Percentile Rank" for metric in offensive_metrics] + ['Player']].melt(id_vars=['Player'], var_name='Metric', value_name='Percentile Rank')
+            player_metrics = filtered_df[[f"{metric} Percentile Rank" for metric in offensive_metrics] + ['Player']].melt(id_vars=['Player'], var_name='Metric', value_name='Percentile Rank')
 
             # Create a bar chart for the selected player's offensive metrics
             bar_chart = alt.Chart(player_metrics).mark_bar().encode(
