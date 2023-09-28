@@ -18,10 +18,10 @@ def load_and_process_data(file_path):
     return df
 
 def calculate_percentile_ranks(data, metrics):
-    # Calculate percentile ranks for the specified metrics based on the selected data and convert to 100.0 scale
+    # Calculate percentile ranks for the specified metrics based on all players' data and convert to 100.0 scale
     percentile_ranks = pd.DataFrame()
     for col in metrics:
-        percentile_ranks[f"{col} Percentile Rank"] = data[col].rank(pct=True) * 100.0
+        percentile_ranks[f"{col} Percentile Rank"] = data[col].rank(pct=True, method='min') * 100.0
 
     return percentile_ranks
 
@@ -33,7 +33,7 @@ def main():
 
     # Load data using the caching function
     file_path = "Complete database.xlsx"
-    df = load_and_process_data(file_path)
+    df = load_and process_data(file_path)
 
     # Create a filter to select the team, league, or all data
     data_selection = st.sidebar.radio("Select Data to Calculate Percentile Ranks", ["All Data", "By Team", "By League"])
