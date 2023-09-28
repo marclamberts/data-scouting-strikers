@@ -12,7 +12,7 @@ def load_and_process_data(file_path):
     # Calculate percentile ranks for all metrics based on the total dataset and convert to 100.0 scale
     percentile_ranks = pd.DataFrame()
     for col in df.columns[6:]:
-        percentile_ranks[f"{col} Percentile Rank"] = df[col].rank(pct=True) * 100.0
+        percentile_ranks[f"{col} Percentile Rank"] = df[col].rank(pct=True)
 
     # Concatenate the percentile ranks DataFrame with the original DataFrame
     df = pd.concat([df, percentile_ranks], axis=1)
@@ -67,12 +67,12 @@ def main():
         
         # Create a bar chart with percentile rank on the x-axis and metrics on the y-axis
         bar_chart = alt.Chart(mean_percentiles).mark_bar().encode(
-            x=alt.X('Percentile Rank:O', title='Percentile Rank', 
+            x=alt.X('Percentile Rank:Q', title='Percentile Rank', 
                     axis=alt.Axis(format='%'),  # Format the x-axis as a percentage
                     scale=alt.Scale(domain=[0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0])
                    ),
             y=alt.Y('Metric:N', title='Metric', sort=alt.EncodingSortField(field="Percentile Rank", op="mean", order="descending")),
-            tooltip=['Metric', alt.Tooltip('Percentile Rank:Q', title='Percentile Rank', format='.1%')]
+            tooltip=['Metric', alt.Tooltip('Percentile Rank:Q', title='Percentile Rank', format='.0%')]
         ).properties(width=800, height=600, title=f'Mean Percentile Ranks for Offensive Metrics |@ShePlotsFC')
 
         st.altair_chart(bar_chart)
@@ -89,12 +89,12 @@ def main():
 
             # Create a bar chart for the selected player's offensive metrics
             player_bar_chart = alt.Chart(player_metrics).mark_bar().encode(
-                x=alt.X('Percentile Rank:O', title='Percentile Rank',
+                x=alt.X('Percentile Rank:Q', title='Percentile Rank',
                         axis=alt.Axis(format='%'),  # Format the x-axis as a percentage
                         scale=alt.Scale(domain=[0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0])
                        ),
                 y=alt.Y('Metric:N', title='Metric', sort=alt.EncodingSortField(field="Percentile Rank", op="mean", order="descending")),
-                tooltip=['Metric', alt.Tooltip('Percentile Rank:Q', title='Percentile Rank', format='.1%')]
+                tooltip=['Metric', alt.Tooltip('Percentile Rank:Q', title='Percentile Rank', format='.0%')]
             ).properties(width=800, height=600, title=f'{player_name} - Mean Percentile Ranks for Offensive Metrics |@ShePlotsFC')
 
             st.altair_chart(player_bar_chart)
