@@ -49,8 +49,9 @@ def main():
             bar_chart = alt.Chart(player_metrics).mark_bar().encode(
                 x=alt.X('Percentile Rank:Q', title='Percentile Rank',
                         axis=alt.Axis(
-                            format='0%',  # Format the x-axis as percentages
-                            values=[i * 10 for i in range(11)]  # Custom tick values from 0 to 100 (0% to 100%)
+                            format='%0.0f%%',  # Format the x-axis as percentages with no decimal places
+                            tickCount=11,  # Set the number of ticks to 11
+                            domain=[0, 100]  # Set the x-axis domain to 0-100
                         ),
                        ),
                 y=alt.Y('Metric:N', title='Metric', sort=alt.EncodingSortField(field="Percentile Rank", op="mean", order="descending")),
