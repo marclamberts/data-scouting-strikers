@@ -2,6 +2,12 @@ import streamlit as st
 import pandas as pd
 import altair as alt
 
+# Define the list of offensive metrics
+offensive_metrics = [
+    'Goals per 90', 'Non-penalty goals per 90', 'Shots per 90', 'xG per 90', 'Assists per 90', 'xA per 90',
+    'Crosses per 90', 'Dribbles per 90', 'Offensive duels per 90', 'Touches in box per 90', 'Progressive runs per 90'
+]
+
 # Function to read and preprocess the data
 @st.cache_data()
 def load_and_process_data(file_path):
@@ -10,10 +16,6 @@ def load_and_process_data(file_path):
     df = df.loc[:, ~df.columns.duplicated()]
 
     # Calculate percentile ranks for the specified offensive metrics based on the total dataset and convert to 100.0 scale
-    offensive_metrics = [
-        'Goals per 90', 'Non-penalty goals per 90', 'Shots per 90', 'xG per 90', 'Assists per 90', 'xA per 90',
-        'Crosses per 90', 'Dribbles per 90', 'Offensive duels per 90', 'Touches in box per 90', 'Progressive runs per 90'
-    ]
     percentile_ranks = pd.DataFrame()
     for col in offensive_metrics:
         percentile_ranks[f"{col} Percentile Rank"] = df[col].rank(pct=True) * 100.0
