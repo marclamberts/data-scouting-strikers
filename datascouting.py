@@ -54,7 +54,7 @@ def main():
     # Create a dropdown for the user to select a metric category in the sidebar
     metric_category = st.sidebar.selectbox("Select Metric Category", ["Offensive", "Defensive", "Passing"])
 
-    # Define the offensive metrics
+    # Define the full list of offensive metrics
     offensive_metrics = [
         'Goals per 90', 'Non-penalty goals per 90', 'Shots per 90', 'xG per 90', 'Assists per 90', 'xA per 90',
         'Crosses per 90', 'Dribbles per 90', 'Offensive duels per 90', 'Touches in box per 90', 'Progressive runs per 90'
