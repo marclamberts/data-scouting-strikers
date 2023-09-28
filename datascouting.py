@@ -47,7 +47,7 @@ def main():
         if selected_league != "All Leagues":
             df = df[df["League"] == selected_league]
 
-    # Filter the data based on the search query
+    # Filter the data based on the search query (player)
     search_player = st.sidebar.text_input("Search Player", "")
     if search_player:
         df = df[df["Player"].str.contains(search_player, case=False)]
