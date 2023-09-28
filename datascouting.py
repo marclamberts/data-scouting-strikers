@@ -20,7 +20,7 @@ def load_and_process_data(file_path):
     return df
 
 def main():
-    st.title("Women's football Scatter plot app")
+    st.title("Men strikers 2022-2023")
 
     # Create a sidebar column on the left for filters
     st.sidebar.title("Choose filters")
