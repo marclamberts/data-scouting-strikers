@@ -49,7 +49,7 @@ def main():
             bar_chart = alt.Chart(player_metrics).mark_bar().encode(
                 x=alt.X('Percentile Rank:Q', title='Percentile Rank', 
                         axis=alt.Axis(format='%'),  # Format the x-axis as a percentage
-                        scale=alt.Scale(domain=[0, 10])  # Limit the x-axis domain to 0-100
+                        scale=alt.Scale(domain=[0, 100])  # Limit the x-axis domain to 0-100
                        ),
                 y=alt.Y('Metric:N', title='Metric', sort=alt.EncodingSortField(field="Percentile Rank", op="mean", order="descending")),
                 tooltip=['Metric', 'Percentile Rank']
