@@ -64,18 +64,7 @@ def main():
     if metric_category == "Offensive":
         # Calculate the mean percentile rank for each offensive metric
         mean_percentiles = df[offensive_metrics + ['Player']].melt(id_vars=['Player'], var_name='Metric', value_name='Percentile Rank')
-        
-        # Create a bar chart with percentile rank on the x-axis and metrics on the y-axis
-        bar_chart = alt.Chart(mean_percentiles).mark_bar().encode(
-            x=alt.X('Percentile Rank:Q', title='Percentile Rank', 
-                    axis=alt.Axis(format='%'),  # Format the x-axis as a percentage
-                    scale=alt.Scale(domain=[0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0])
-                   ),
-            y=alt.Y('Metric:N', title='Metric', sort=alt.EncodingSortField(field="Percentile Rank", op="mean", order="descending")),
-            tooltip=['Metric', alt.Tooltip('Percentile Rank:Q', title='Percentile Rank', format='.0%')]
-        ).properties(width=800, height=600, title=f'Mean Percentile Ranks for Offensive Metrics |@ShePlotsFC')
-
-        st.altair_chart(bar_chart)
+  
 
     # Add a text input for the user to search for a specific player
     search_player = st.text_input("Search Player", "")
