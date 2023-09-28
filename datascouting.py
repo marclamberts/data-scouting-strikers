@@ -38,12 +38,21 @@ def main():
     # Add a text input for the user to search for a specific player
     search_player = st.text_input("Search Player", "")
 
+    # Debug output to check the filtered data
+    st.write(f"Search Player: {search_player}")
+    st.write("Filtered Data:")
+    st.write(df[df["Player"].str.contains(search_player, case=False)])
+
     # Filter the data based on the search query and display a bar chart for the selected player
     if search_player:
         filtered_df = df[df["Player"].str.contains(search_player, case=False)]
         if not filtered_df.empty:
             player_name = filtered_df.iloc[0]["Player"]
             player_metrics = filtered_df[offensive_metrics + ['Player']].melt(id_vars=['Player'], var_name='Metric', value_name='Percentile Rank')
+
+            # Debug output to check the player metrics
+            st.write("Player Metrics:")
+            st.write(player_metrics)
 
             # Create a bar chart for the selected player's offensive metrics
             bar_chart = alt.Chart(player_metrics).mark_bar().encode(
