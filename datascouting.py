@@ -38,28 +38,20 @@ def main():
     # Add a text input for the user to search for a specific player
     search_player = st.text_input("Search Player", "")
 
-    # Debug output to check the filtered data
-    st.write(f"Search Player: {search_player}")
-    st.write("Filtered Data:")
-    st.write(df[df["Player"].str.contains(search_player, case=False)])
-
     # Filter the data based on the search query and display a bar chart for the selected player
     if search_player:
         filtered_df = df[df["Player"].str.contains(search_player, case=False)]
         if not filtered_df.empty:
             player_name = filtered_df.iloc[0]["Player"]
-            player_metrics = filtered_df[offensive_metrics + ['Player']].melt(id_vars=['Player'], var_name='Metric', value_name='Percentile Rank')
-
-            # Debug output to check the player metrics
-            st.write("Player Metrics:")
-            st.write(player_metrics)
+            player_metrics = filtered_df[offensive_metrics + [f"{metric} Percentile Rank" for metric in offensive_metrics] + ['Player']].melt(id_vars=['Player'], var_name='Metric', value_name='Percentile Rank')
 
             # Create a bar chart for the selected player's offensive metrics
             bar_chart = alt.Chart(player_metrics).mark_bar().encode(
                 x=alt.X('Percentile Rank:Q', title='Percentile Rank',
                         axis=alt.Axis(
-                            format='%0.0f%%',  # Format the x-axis as percentages with no decimal places
-                            values=[i * 10 for i in range(11)]  # Custom tick values from 0 to 100 (0% to 100%)
+                            format='0.0f',  # Format the x-axis without decimals
+                            tickCount=11,  # Set the number of ticks to 11
+                            domain=[0, 100]  # Set the x-axis domain to 0-100
                         ),
                        ),
                 y=alt.Y('Metric:N', title='Metric', sort=alt.EncodingSortField(field="Percentile Rank", op="mean", order="descending")),
