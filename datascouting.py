@@ -48,8 +48,8 @@ def main():
             # Create a bar chart for the selected player's offensive metrics
             bar_chart = alt.Chart(player_metrics).mark_bar().encode(
                 x=alt.X('Percentile Rank:Q', title='Percentile Rank', 
-                        axis=alt.Axis(format='%'),  # Format the x-axis as a percentage
-                        scale=alt.Scale(domain=[0, 100], nice=True)  # Limit the x-axis domain to 0-100 with nice ticks
+                        axis=alt.Axis(format='0%', ticks="%"),  # Format the x-axis as a percentage with specified ticks
+                        scale=alt.Scale(domain=[0, 100])  # Limit the x-axis domain to 0-100
                        ),
                 y=alt.Y('Metric:N', title='Metric', sort=alt.EncodingSortField(field="Percentile Rank", op="mean", order="descending")),
                 tooltip=['Metric', 'Percentile Rank']
