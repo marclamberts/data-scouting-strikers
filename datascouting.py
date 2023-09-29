@@ -55,6 +55,9 @@ def main():
     # Melt the DataFrame for visualization
     melted_df = pd.melt(percentile_ranks_df, var_name='Metric', value_name='Percentile Rank')
 
+    # Comment out the "Search Player" input
+    # selected_player = st.sidebar.text_input("Search Player", "")
+
     # Create a filter to select the specific player
     selected_player = st.sidebar.selectbox("Select Player", ["All Players"] + df["Player"].unique().tolist())
 
