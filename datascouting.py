@@ -49,7 +49,7 @@ def main():
 
     # Filter the data based on the search query (player)
     search_player = st.sidebar.text_input("Search Player", "")
-    
+
     # Calculate percentile ranks for the selected data and metrics
     percentile_ranks_df = calculate_percentile_ranks(df, offensive_metrics)
 
@@ -63,10 +63,6 @@ def main():
         tooltip=['Metric', 'Percentile Rank']
     ).properties(width=800, height=600, title=f'Mean Percentile Ranks for Offensive Metrics |@ShePlotsFC')
 
-    # Display the search input and league selection above the percentile bars
-    st.sidebar.text_input("Search Player", search_player)
-    st.sidebar.radio("Select Data to Calculate Percentile Ranks", ["All Data", "By Team", "By League"])
-    
     # Display the bar chart
     st.altair_chart(bar_chart)
 
