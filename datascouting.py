@@ -42,8 +42,12 @@ def main():
     if selected_league != "All Leagues":
         df = df[df["League"] == selected_league]
 
-    # Filter the data based on the search query (player)
-    search_player = st.sidebar.text_input("Search Player", "")
+    # Create a filter to select the specific team
+    selected_team = st.sidebar.selectbox("Select Team", ["All Teams"] + df["Team within selected timeframe"].unique().tolist())
+
+    # Filter the data based on the selected team
+    if selected_team != "All Teams":
+        df = df[df["Team within selected timeframe"] == selected_team]
 
     # Calculate percentile ranks for the selected data and metrics
     percentile_ranks_df = calculate_percentile_ranks(df, offensive_metrics)
@@ -60,7 +64,7 @@ def main():
 
     # Create a bar chart for the selected player's offensive metrics
     bar_chart = alt.Chart(melted_df).mark_bar().encode(
-        x=alt.X('Percentile Rank:Q', title='Percentile Rank', axis=alt.Axis(format='d')),
+        x=alt.X('Percentile Rank:Q', title='Percentile Rank', axis=alt.Axis(format='d', tickCount=11, domain=[0, 100])),
         y=alt.Y('Metric:N', title='Metric', sort=alt.EncodingSortField(field="Percentile Rank", op="mean", order="descending")),
         tooltip=['Metric', 'Percentile Rank']
     ).properties(width=800, height=600, title=f'Mean Percentile Ranks for Offensive Metrics |@ShePlotsFC')
