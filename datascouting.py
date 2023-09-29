@@ -35,17 +35,12 @@ def main():
     file_path = "Complete database.xlsx"
     df = load_and_process_data(file_path)
 
-    # Create a filter to select the team, league, or all data
-    data_selection = st.sidebar.radio("Select Data to Calculate Percentile Ranks", ["All Data", "By Team", "By League"])
+    # Create a filter to select the specific league
+    selected_league = st.sidebar.selectbox("Select League", ["All Leagues"] + df["League"].unique().tolist())
 
-    if data_selection == "By Team":
-        selected_team = st.sidebar.selectbox("Select Team", ["All Teams"] + df["Team within selected timeframe"].unique().tolist())
-        if selected_team != "All Teams":
-            df = df[df["Team within selected timeframe"] == selected_team]
-    elif data_selection == "By League":
-        selected_league = st.sidebar.selectbox("Select League", ["All Leagues"] + df["League"].unique().tolist())
-        if selected_league != "All Leagues":
-            df = df[df["League"] == selected_league]
+    # Filter the data based on the selected league
+    if selected_league != "All Leagues":
+        df = df[df["League"] == selected_league]
 
     # Filter the data based on the search query (player)
     search_player = st.sidebar.text_input("Search Player", "")
