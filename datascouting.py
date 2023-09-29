@@ -51,6 +51,13 @@ def main():
     # Melt the DataFrame for visualization
     melted_df = pd.melt(percentile_ranks_df, var_name='Metric', value_name='Percentile Rank')
 
+    # Create a filter to select the specific player
+    selected_player = st.sidebar.selectbox("Select Player", ["All Players"] + df["Player"].unique().tolist())
+
+    # Filter the data based on the selected player
+    if selected_player != "All Players":
+        melted_df = melted_df[melted_df["Player"] == selected_player]
+
     # Create a bar chart for the selected player's offensive metrics
     bar_chart = alt.Chart(melted_df).mark_bar().encode(
         x=alt.X('Percentile Rank:Q', title='Percentile Rank', axis=alt.Axis(format='d')),
