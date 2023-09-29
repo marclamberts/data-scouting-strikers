@@ -55,9 +55,6 @@ def main():
     # Melt the DataFrame for visualization
     melted_df = pd.melt(percentile_ranks_df, var_name='Metric', value_name='Percentile Rank')
 
-    # Comment out the "Search Player" input
-    # selected_player = st.sidebar.text_input("Search Player", "")
-
     # Create a filter to select the specific player
     selected_player = st.sidebar.selectbox("Select Player", ["All Players"] + df["Player"].unique().tolist())
 
@@ -67,7 +64,7 @@ def main():
 
     # Create a bar chart for the selected player's offensive metrics
     bar_chart = alt.Chart(melted_df).mark_bar().encode(
-        x=alt.X('Percentile Rank:Q', title='Percentile Rank', axis=alt.Axis(format='d', tickCount=11, domain=[0, 100])),
+        x=alt.X('Percentile Rank:Q', title='Percentile Rank', axis=alt.Axis(format='%')),
         y=alt.Y('Metric:N', title='Metric', sort=alt.EncodingSortField(field="Percentile Rank", op="mean", order="descending")),
         tooltip=['Metric', 'Percentile Rank']
     ).properties(width=800, height=600, title=f'Mean Percentile Ranks for Offensive Metrics |@ShePlotsFC')
