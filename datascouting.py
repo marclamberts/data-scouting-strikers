@@ -29,7 +29,7 @@ def main():
     min_minutes_played = st.sidebar.slider("Minimum Minutes Played", min_value=0, max_value=2000, value=500, step=100)
 
     # Load data using the caching function
-    file_path = "Complete Database.xlsx"
+    file_path = "Complete database.xlsx"
     df = load_and_process_data(file_path)
 
     # Create a dropdown for the user to select a league in the sidebar
