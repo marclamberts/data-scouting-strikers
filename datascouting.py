@@ -20,7 +20,7 @@ def load_and_process_data(file_path):
     return df
 
 def main():
-    st.title("Data scouting app)
+    st.title("Data scouting app")
 
     # Create a sidebar column on the left for filters
     st.sidebar.title("Choose filters")
