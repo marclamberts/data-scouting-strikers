@@ -36,7 +36,8 @@ def main():
 
         # Load data using the caching function
         file_path = "Scouting database 31-10-2023.xlsx"
-        df = load_and process_data(file_path)
+        df = load_and_process_data(file_path)
+
 
         # Create a dropdown for the user to select a league in the sidebar
         leagues = df["League"].unique()
