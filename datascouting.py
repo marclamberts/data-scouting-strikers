@@ -38,7 +38,6 @@ def main():
         file_path = "Scouting database 31-10-2023.xlsx"
         df = load_and_process_data(file_path)
 
-
         # Create a dropdown for the user to select a league in the sidebar
         leagues = df["League"].unique()
         selected_league = st.sidebar.selectbox("Select League", leagues)
@@ -80,7 +79,7 @@ def main():
         # Display the team filter on the left column
         st.sidebar.write(f"Selected Team: {selected_team}")
 
-        # Display the graph for selected metric category in the main column
+        # Display the graph for the selected metric category in the main column
         chart_data = sorted_df.head(15)
         chart = alt.Chart(chart_data).mark_bar().encode(
             x=alt.X(selected_metric, title=selected_metric),
