@@ -26,7 +26,7 @@ def main():
         # Search for the player in the DataFrame and display their information
         player_info = df[df['Player'].str.contains(player_name, case=False, na=False)]
         if not player_info.empty:
-            st.write(player_info[['Player', 'Age', 'Team', 'Minutes played', 'Goals', 'Assists', 'xG', 'xA']])
+            st.write(player_info[['Player', 'Age', 'Team', 'League', 'Season', 'Minutes played', 'Goals', 'Assists', 'xG', 'xA']])
         else:
             st.write("Player not found")
 
