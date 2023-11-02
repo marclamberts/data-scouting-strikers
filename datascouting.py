@@ -20,7 +20,7 @@ def load_and_process_data(file_path):
     return df
 
 def main():
-    st.title("Women's football Bar graph app")
+    st.title("Data scouting app)
 
     # Create a sidebar column on the left for filters
     st.sidebar.title("Choose filters")
@@ -29,7 +29,7 @@ def main():
     min_minutes_played = st.sidebar.slider("Minimum Minutes Played", min_value=0, max_value=2000, value=500, step=100)
 
     # Load data using the caching function
-    file_path = "Complete database.xlsx"
+    file_path = "Scouting database 31-10-2023.xlsx"
     df = load_and_process_data(file_path)
 
     # Create a dropdown for the user to select a league in the sidebar
