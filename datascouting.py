@@ -34,7 +34,7 @@ def main():
         st.experimental_set_query_params(page="main")
     
     if st.experimental_get_query_params()["page"] == "search":
-        search_players()
+        search_players(df)
     else:
         show_main_page()
 
@@ -100,7 +100,7 @@ def show_main_page():
     # Add the text at the bottom of the app
     st.markdown("Marc Lamberts @lambertsmarc @ShePlotsFC | Collected at 22-07-2023 | Wyscout")
 
-def search_players():
+def search_players(df):
     st.title("Search Players")
     player_name = st.text_input("Enter Player Name")
     
