@@ -25,16 +25,11 @@ def main():
     # Create a sidebar column on the left for filters
     st.sidebar.title("Choose filters")
 
-    # Create a "Search players" button on the left menu
+    # Create a button to switch to the "Search Players" page
     search_players_button = st.sidebar.button("Search Players")
 
     if search_players_button:
-        st.experimental_set_query_params(page="search")
-    else:
-        st.experimental_set_query_params(page="main")
-    
-    if st.experimental_get_query_params()["page"] == "search":
-        search_players(df)
+        show_search_players_page()
     else:
         show_main_page()
 
@@ -84,33 +79,11 @@ def show_main_page():
 
     sorted_df = filtered_df.sort_values(by=selected_metric, ascending=False)
 
+
     # Display the team filter on the left column
     st.sidebar.write(f"Selected Team: {selected_team}")
 
     # Display the graph for the selected metric category in the main column
     chart_data = sorted_df.head(15)
-    chart = alt.Chart(chart_data).mark_bar().encode(
-        x=alt.X(selected_metric, title=selected_metric),
-        y=alt.Y("Player", sort="-x", title="Player"),
-        tooltip=["Player", "Team", "Age", "Minutes played", selected_metric, alt.Tooltip(f"{selected_metric} Percentile Rank:Q", format=".1f")],
-        color=alt.Color(f"{selected_metric} Percentile Rank:Q", title=f"{selected_metric} Percentile Rank", scale=alt.Scale(scheme='viridis'))
-    ).properties(width=1000, height=600, title=f"Top 15 {metric_category} Performers in {selected_team} ({selected_league}) for {selected_metric} |@ShePlotsFC")
-    st.altair_chart(chart)
+    chart = alt.Chart(chart_data)
 
-    # Add the text at the bottom of the app
-    st.markdown("Marc Lamberts @lambertsmarc @ShePlotsFC | Collected at 22-07-2023 | Wyscout")
-
-def search_players(df):
-    st.title("Search Players")
-    player_name = st.text_input("Enter Player Name")
-    
-    if player_name:
-        # Search for the player in the DataFrame and display their information
-        player_info = df[df['Player'].str.contains(player_name, case=False, na=False)]
-        if not player_info.empty:
-            st.write(player_info[['Player', 'Age', 'Team', 'Minutes played', 'Goals', 'Assists', 'xG', 'xA']])
-        else:
-            st.write("Player not found")
-
-if __name__ == "__main__":
-    main()
