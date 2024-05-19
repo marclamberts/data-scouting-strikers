@@ -16,7 +16,7 @@ def main():
     st.sidebar.title("Search")
 
     # Load data using the caching function
-    file_path = "Scouting database 31-10-2023.xlsx"
+    file_path = "Database Men.xlsx"
     df = load_and_process_data(file_path)
 
     # Create a text input for the user to enter a player name
