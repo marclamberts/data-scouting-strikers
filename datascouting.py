@@ -13,7 +13,7 @@ def load_and_process_data(file_path):
     # Drop duplicate columns from the DataFrame
     df = df.loc[:, ~df.columns.duplicated()]
     # Filter and rename columns
-    metrics_to_keep = ['Player','Team', 'Position', 'Age', 'Matches played', 'Minutes played','Goals per 90', 'xG per 90', 'Shots on target, %', 'Dribbles per 90', 'Progressive runs per 90',
+    metrics_to_keep = ['Player', 'Team', 'Position', 'League', 'Age', 'Matches played', 'Minutes played', 'Goals per 90', 'xG per 90', 'Shots on target, %', 'Dribbles per 90', 'Progressive runs per 90',
                       'Defensive duels won, %', 'Aerial duels won, %', 'PAdj Sliding tackles', 'PAdj Interceptions', 'Shots blocked per 90',
                       'xA per 90', 'Key passes per 90', 'Passes to final third per 90', 'Passes to penalty area per 90', 'Through passes per 90', 'Progressive passes per 90']
     filtered_df = df[metrics_to_keep]
@@ -79,14 +79,14 @@ def generate_pizza_chart(df, player_name):
     filtered_df = df[df['Position'].isin(positions_to_filter)]
 
     # Drop unnecessary columns and reset index
-    df = df.drop(['Team', 'Position', 'Age', 'Matches played', 'Minutes played'], axis=1).reset_index()
+    filtered_df = filtered_df.drop(['Team', 'Position', 'Age', 'Matches played', 'Minutes played'], axis=1).reset_index()
 
     # Create a parameter list
-    params = list(df.columns)
+    params = list(filtered_df.columns)
     params = params[2:]
 
     # Select the player and get their data
-    player_df = df.loc[df['Player'] == player_name].reset_index()
+    player_df = filtered_df.loc[filtered_df['Player'] == player_name].reset_index()
     if player_df.empty:
         st.write("Player data not available for pizza chart.")
         return
@@ -98,7 +98,7 @@ def generate_pizza_chart(df, player_name):
     # Calculate percentile values
     values = []
     for x in range(len(params)):   
-        values.append(math.floor(stats.percentileofscore(df[params[x]], player[x])))
+        values.append(math.floor(stats.percentileofscore(filtered_df[params[x]], player[x])))
 
     # Ensure no value is exactly 100
     values = [99 if v == 100 else v for v in values]
