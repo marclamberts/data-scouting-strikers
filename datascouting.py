@@ -29,7 +29,7 @@ def main():
         # Search for the player in the DataFrame and display their information
         player_info = df[df['Player'].str.contains(player_name, case=False, na=False)]
         if not player_info.empty:
-            st.write(player_info[['Player', 'Age', 'Team', 'Minutes played', 'Goals', 'Assists', 'xG', 'xA']])
+            st.write(player_info[['Player', 'Age', 'Team', 'Position', 'Minutes played', 'Goals', 'Assists', 'xG', 'xA']])
         else:
             st.write("Player not found")
 
@@ -37,9 +37,10 @@ def main():
         # Search for the team in the DataFrame and display all players from that team
         players_in_team = df[df['Team'].str.contains(team_name, case=False, na=False)]
         if not players_in_team.empty:
-            st.write(players_in_team[['Player', 'Age', 'Team', 'League', 'Minutes played', 'Goals', 'Assists', 'xG', 'xA']])
+            st.write(players_in_team[['Player', 'Age', 'Team', 'Position', 'League', 'Minutes played', 'Goals', 'Assists', 'xG', 'xA']])
         else:
             st.write("Team not found")
 
 if __name__ == "__main__":
     main()
+
