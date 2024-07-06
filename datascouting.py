@@ -19,11 +19,15 @@ def main():
     file_path = "Database Men.xlsx"
     df = load_and_process_data(file_path)
 
+    # Create a dropdown menu for the user to select a league
+    league = st.sidebar.selectbox("Select League", options=df['League'].unique())
+
+    # Create a dropdown menu for the user to select a team based on the selected league
+    teams_in_league = df[df['League'] == league]['Team'].unique()
+    team_name = st.sidebar.selectbox("Select Team", options=teams_in_league)
+
     # Create a text input for the user to enter a player name
     player_name = st.sidebar.text_input("Search Player by Name")
-
-    # Create a text input for the user to enter a team name
-    team_name = st.sidebar.text_input("Search Team by Name")
 
     if player_name:
         # Search for the player in the DataFrame and display their information
@@ -43,4 +47,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
